@@ -161,10 +161,11 @@ section > .section-header:not(:first-child) {
 #form-ratings .bold {
   font-weight: bold;
 }
-#form-ratings .output, #form-ratings .output:disabled {
+#form-ratings .output {
   background: none;
   border: none;
   color: var(--color-black-0);
+  opacity: 1;
 }
 #form-ratings button {
   background: var(--color-white-3);
