@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="style.css">
+    <title>Runs</title>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-container">
+        <div id="nav-brand">
+          <a href="index.html">Concrete</a>
+        </div>
+      </div>
+    </nav>
+
+    <header>
+      <div class="header-container">
+        <h1 class="header-1">Runs calculator for making sand.</h1>
+        <h2 class="header-2">4 Inputs: Trunk Type, Tycoon Premium, Post-Op Perk, # of Concrete Wanted.</h2>
+      </div>
+    </header>
+
+    <main>
+      <div class="main-container">
+        <div class="section-container">
+          <section class="width-two-thirds">
+            <form class="section-body" id="form-ratings">
+              <!-- INPUTS -->
+              <div class="label-no-input"><b>Inputs</b></div>
+              <label for="trunk">Trunk Type:</label>
+              <select name="trunks" id="trunk">
+                <option value="mk13">MK13</option>
+                <option value="mk14">MK14</option>
+                <option value="mk14mk15">MK14 + MK15</option>
+              </select>
+
+              <label>Tycoon Premium:</label>
+              <div>
+                <div>
+                  <input type="radio" id="premium-1" name="radio-prem" checked>
+                  <label for="premium-1">Yes</label>
+                </div>
+                <div>
+                  <input type="radio" id="premium-0" name="radio-prem">
+                  <label for="premium-0">No</label>
+                </div>
+              </div>
+
+              <label>Post-Op Perk:</label>
+              <div>
+                <div>
+                  <input type="radio" id="postop-1" name="radio-postop" checked>
+                  <label for="postop-1">Yes</label>
+                </div>
+                <div>
+                  <input type="radio" id="postop-0" name="radio-postop">
+                  <label for="postop-0">No</label>
+                </div>
+              </div>
+
+              <label for="concrete"># of Concrete Wanted:</label>
+              <input type="number" id="concrete" min="0" max="100000" step="50" value="1000">
+
+              <label for="result-capacity">Capacity (kg):</label>
+              <input type="text" id="result-capacity" class="output bold" disabled="disabled">
+
+              <button type="button" id="calculateRuns">Calculate</button>
+
+              <!-- 1. PICKUP: RAW GAS -->
+              <div class="label-no-input"><b>1. Pickup: Raw Gas</b></div>
+              <label for="result-runs-1">Runs:</label>
+              <input type="text" id="result-runs-1" class="output bold" disabled="disabled">
+
+              <label for="location-1">Pickup at:</label>
+              <input type="text" id="location-1" class="output" disabled="disabled" value="GSD Gas">
+
+              <!-- 2. RAW GAS TO WASTE WATER -->
+              <div class="label-no-input"><b>2. Raw Gas → Waste Water</b></div>
+              <label for="result-runs-2">Runs:</label>
+              <input type="text" id="result-runs-2" class="output bold" disabled="disabled">
+
+              <label for="location-2">Refine at:</label>
+              <input type="text" id="location-2" class="output" disabled="disabled" value="Refinery">
+
+              <!-- 3. WASTE WATER TO SULFUR -->
+              <div class="label-no-input"><b>3. Waste Water → Sulfur</b></div>
+              <label for="result-runs-3">Runs:</label>
+              <input type="text" id="result-runs-3" class="output bold" disabled="disabled">
+
+              <label for="location-3">Refine at:</label>
+              <input type="text" id="location-3" class="output" disabled="disabled" value="Water Treatment Plant">
+
+              <!-- 4. CHEMICALS TO ACID -->
+              <div class="label-no-input"><b>4. Chemicals → Acid</b></div>
+              <label for="result-runs-4">Runs:</label>
+              <input type="text" id="result-runs-4" class="output bold" disabled="disabled">
+
+              <label for="location-4">Refine at:</label>
+              <input type="text" id="location-4" class="output" disabled="disabled" value="Chemical Laboratories">
+
+              <!-- 5. PICKUP: UNFILTERED WATER -->
+              <div class="label-no-input"><b>5. Pickup: Unfiltered Water</b></div>
+              <label for="result-runs-5">Runs:</label>
+              <input type="text" id="result-runs-5" class="output bold" disabled="disabled">
+
+              <label for="location-5">Pickup at:</label>
+              <input type="text" id="location-5" class="output" disabled="disabled" value="Land Act Reservoir">
+
+              <!-- 6. UNFILTERED WATER + ACID TO TREATED WATER -->
+              <div class="label-no-input"><b>6. Unfiltered Water + Acid → Treated Water</b></div>
+              <label for="result-runs-6">Runs:</label>
+              <input type="text" id="result-runs-6" class="output bold" disabled="disabled">
+
+              <label for="location-6">Refine at:</label>
+              <input type="text" id="location-6" class="output" disabled="disabled" value="Water Treatment Plant">
+
+              <!-- 7. PICKUP: CRUDE OIL -->
+              <div class="label-no-input"><b>7. Pickup: Crude Oil</b></div>
+              <label for="result-runs-7">Runs:</label>
+              <input type="text" id="result-runs-7" class="output bold" disabled="disabled">
+
+              <label for="location-7">Pickup at:</label>
+              <input type="text" id="location-7" class="output" disabled="disabled" value="LS Oil">
+
+              <!-- 8. TREATED WATER + CRUDE OIL TO KEROSENE -->
+              <div class="label-no-input"><b>8. Treated Water + Crude Oil → Kerosene</b></div>
+              <label for="result-runs-8">Runs:</label>
+              <input type="text" id="result-runs-8" class="output bold" disabled="disabled">
+
+              <label for="location-8">Refine at:</label>
+              <input type="text" id="location-8" class="output" disabled="disabled" value="Refinery">
+
+              <!-- 9. KEROSENE + SULFUR TO EXPLOSIVE -->
+              <div class="label-no-input"><b>9. Kerosene + Sulfur → Explosive</b></div>
+              <label for="result-runs-9">Runs:</label>
+              <input type="text" id="result-runs-9" class="output bold" disabled="disabled">
+
+              <label for="location-9">Refine at:</label>
+              <input type="text" id="location-9" class="output" disabled="disabled" value="Military Workshop">
+
+              <!-- 10. RAW ORE MIX + EXPLOSIVE TO SAND -->
+              <div class="label-no-input"><b>10. Raw Ore Mix + Explosive → Sand</b></div>
+              <label for="result-runs-10">Runs:</label>
+              <input type="text" id="result-runs-10" class="output bold" disabled="disabled">
+
+              <label for="location-10">Refine at:</label>
+              <input type="text" id="location-10" class="output" disabled="disabled" value="Deep Quarry">
+            </form>
+          </section>
+
+          <section>
+            <h3 class="section-header">Features</h3>
+            <p class="section-body">
+              Calculates runs for 3 different trunk types, with/without Tycoon Premium, and with/without the Post-Op Perk active.
+            </p>
+            <p class="section-body">
+              Assumes 10 processes for obtaining sand using the ROM-Explosive method. The process of obtaining ROMs is not included. The processes are numbered as a rough flow of events, not a strict flow.
+            </p>
+            <p class="section-body">
+              Treated Water runs are for the Diluted Fuel Refining process to make kerosene. Does not take into account water needed for making concrete.
+            </p>
+            <h3 class="section-header">Ratios</h3>
+            <p class="section-body">
+              Get material ratios <u><a href="index.html" class="link-blue">here</a></u>.
+            </p>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-container">
+        <p>luci – <a href="https://github.com/truccluci" class="link-blue">github</a></p>
+      </div>
+    </footer>
+
+    <script src="runs.js"></script>
+  </body>
+</html>

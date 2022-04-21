@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="style.css">
+    <title>Ratios</title>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-container">
+        <div id="nav-brand">
+          <a href="#">Concrete</a>
+        </div>
+      </div>
+    </nav>
+
+    <header>
+      <div class="header-container">
+        <h1 class="header-1">Ratio calculator for the ROM-Explosive concrete route.</h1>
+        <h2 class="header-2">3 Inputs: Trunk Type, Tycoon Premium, Post-Op Perk.</h2>
+      </div>
+    </header>
+
+    <main>
+      <div class="main-container">
+        <div class="section-container">
+          <section class="width-two-thirds">
+            <form class="section-body" id="form-ratings">
+              <!-- INPUTS -->
+              <div class="label-no-input"><b>Inputs</b></div>
+              <label for="trunk">Trunk Type:</label>
+              <select name="trunks" id="trunk">
+                <option value="mk13">MK13</option>
+                <option value="mk14">MK14</option>
+                <option value="mk15">MK15</option>
+              </select>
+
+              <label>Tycoon Premium:</label>
+              <div>
+                <div>
+                  <input type="radio" id="premium-1" name="radio-prem" checked>
+                  <label for="premium-1">Yes</label>
+                </div>
+                <div>
+                  <input type="radio" id="premium-0" name="radio-prem">
+                  <label for="premium-0">No</label>
+                </div>
+              </div>
+
+              <label>Post-Op Perk:</label>
+              <div>
+                <div>
+                  <input type="radio" id="postop-1" name="radio-postop" checked>
+                  <label for="postop-1">Yes</label>
+                </div>
+                <div>
+                  <input type="radio" id="postop-0" name="radio-postop">
+                  <label for="postop-0">No</label>
+                </div>
+              </div>
+
+              <label for="result-capacity">Capacity (kg):</label>
+              <input type="text" id="result-capacity" class="output bold" disabled="disabled">
+
+              <!-- 1. ACID -->
+              <div class="label-no-input" id="item-1-acid"><b>Acid</b></div>
+              <label for="result-acid-1">Chemicals:</label>
+              <input type="text" id="result-acid-1" class="output bold" disabled="disabled">
+
+              <!-- 2. CEMENT MIX -->
+              <div class="label-no-input" id="item-2-cementmix"><b>Cement Mix</b></div>
+              <label for="result-cementmix-1">Sand:</label>
+              <input type="text" id="result-cementmix-1" class="output bold" disabled="disabled">
+
+              <label for="result-cementmix-2">Sawdust:</label>
+              <input type="text" id="result-cementmix-2" class="output bold" disabled="disabled">
+
+              <!-- 3. CONCRETE -->
+              <div class="label-no-input" id="item-3-concrete"><b>Concrete</b></div>
+              <label for="result-concrete-1">Cement Mix:</label>
+              <input type="text" id="result-concrete-1" class="output bold" disabled="disabled">
+
+              <label for="result-concrete-2">Treated Water:</label>
+              <input type="text" id="result-concrete-2" class="output bold" disabled="disabled">
+
+              <!-- 4. EXPLOSIVE -->
+              <div class="label-no-input" id="item-4-explosive"><b>Explosive</b></div>
+              <label for="result-explosive-1">Kerosene:</label>
+              <input type="text" id="result-explosive-1" class="output bold" disabled="disabled">
+
+              <label for="result-explosive-2">Sulfur:</label>
+              <input type="text" id="result-explosive-2" class="output bold" disabled="disabled">
+
+              <!-- 5. KEROSENE -->
+              <div class="label-no-input" id="item-5-kerosene"><b>Kerosene</b></div>
+              <label for="result-kerosene-1">Treated Water:</label>
+              <input type="text" id="result-kerosene-1" class="output bold" disabled="disabled">
+
+              <label for="result-kerosene-2">Crude Oil:</label>
+              <input type="text" id="result-kerosene-2" class="output bold" disabled="disabled">
+
+              <!-- 6. SAND -->
+              <div class="label-no-input" id="item-6-sand"><b>Sand</b></div>
+              <label for="result-sand-1">Raw Ore Mix:</label>
+              <input type="text" id="result-sand-1" class="output bold" disabled="disabled">
+
+              <label for="result-sand-2">Explosive:</label>
+              <input type="text" id="result-sand-2" class="output bold" disabled="disabled">
+
+              <!-- 7. TREATED WATER -->
+              <div class="label-no-input" id="item-7-treatedwater"><b>Treated Water</b></div>
+              <label for="result-treatedwater-1">Untreated Water:</label>
+              <input type="text" id="result-treatedwater-1" class="output bold" disabled="disabled">
+
+              <label for="result-treatedwater-2">Acid:</label>
+              <input type="text" id="result-treatedwater-2" class="output bold" disabled="disabled">
+            </form>
+          </section>
+
+          <section>
+            <h3 class="section-header">Features</h3>
+            <p class="section-body">
+              Calculates ratios for 3 different trunk types, with/without Tycoon Premium, and with/without the Post-Op Perk active.
+            </p>
+            <p class="section-body">
+              Amounts to take to trunk are maximal and non-fractional.
+            </p>
+            <h3 class="section-header">Runs</h3>
+            <p class="section-body">
+              Estimate runs based on trunk size <u><a href="runs.html" class="link-blue">here</a></u>.
+            </p>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-container">
+        <p>luci – <a href="https://github.com/truccluci" class="link-blue">github</a></p>
+      </div>
+    </footer>
+
+    <script src="ratios.js"></script>
+  </body>
+</html>
