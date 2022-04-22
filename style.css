@@ -127,6 +127,9 @@ section > .section-header:not(:first-child) {
 .link-blue {
   color: var(--color-link);
 }
+.text-small {
+  font-size: 0.85rem;
+}
 
 #form-ratings {
   background: var(--color-white-2);
@@ -171,6 +174,7 @@ section > .section-header:not(:first-child) {
   background: none;
   border: none;
   color: var(--color-black-0);
+  font-weight: 600;
   opacity: 1;
   -webkit-appearance: none;
 }
