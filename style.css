@@ -1,7 +1,7 @@
 /* 2022-04-19 - luci */
 :root {
   --color-brand-1: #5a8cd2;
-  --color-link: #00e;
+  --color-link: #0969da;
   --color-white-0: #fff;
   --color-white-1: #fefefe;
   --color-white-2: #fafafa;
@@ -12,7 +12,7 @@
   --color-black-2: #333;
   --color-black-3: #3a3836;
   --color-shadow: 0deg 0% 70%;
-  --font-stack: "Times New Roman", -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", sans-serif;
+  --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"
 }
 html,
 body {
