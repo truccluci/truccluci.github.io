@@ -5,183 +5,135 @@ const $ = (id) => {
 
 // CALCULATE TRUNK CAPACITY
 const calculateCapacity = () => {
-  const trunk = $("trunk").value;
+  const trunk = $('trunk').value;
   let multiple;
-  if ($("premium-0").checked && $("postop-0").checked) {
+  if ($('premium-0').checked && $('postop-0').checked) {
     multiple = 1;
-  } else if ($("premium-1").checked && $("postop-1").checked) {
+  } else if ($('premium-1').checked && $('postop-1').checked) {
     multiple = 1.3;
   } else {
     multiple = 1.15;
   }
-  let capacity;
+  let capacity1;
+  let capacity2;
   if (trunk == 'mk13') {
-    capacity = 8500 * multiple;
+    capacity1 = 8500 * multiple;
+    capacity2 = 0;
   } else if (trunk == 'mk14') {
-    capacity = 9000 * multiple;
-  } else if (trunk == 'mk15') {
-    capacity = 6000 * multiple;
+    capacity1 = 9000 * multiple;
+    capacity2 = 0;
+  } else if (trunk == 'mk14mk15') {
+    capacity1 = 9000 * multiple;
+    capacity2 = 6000 * multiple;
   }
-  $("result-capacity").value = Math.round(capacity);
+  $('result-capacity').value = Math.round(capacity1 + capacity2);
+  return [capacity1, capacity2];
 }
 
-// 1. REDUCTIVE - ACID
-const calcAcid = () => {
-  const capacity = $("result-capacity").value;
-  const WEIGHT_CHEMICALS = 25;
-  let [totalWeight, amountAcid, amountChemicals] = [0, 0, 0]
+// RATIO FOR ADDITIVE PROCESSES
+const ratioAdditive = (capacity, weight1, weight2, factor1, factor2) => {
+  let [totalWeight, amountProduct, amountReactant1, amountReactant2] = [0, 0, 0, 0]
   while (totalWeight <= capacity) {
-	  amountAcid ++;
-	  amountChemicals = amountAcid / 4;
-    totalWeight = amountChemicals * WEIGHT_CHEMICALS;
+	  amountProduct ++;
+	  amountReactant1 = amountProduct * factor1;
+    amountReactant2 = amountProduct * factor2;
+    totalWeight = amountReactant1 * weight1 + amountReactant2 * weight2;
   }
-  while (!Number.isInteger(amountChemicals)) {
-    amountAcid --;
-    amountChemicals = amountAcid / 4;
-  }
-  $("item-1-acid").childNodes[0].textContent = 'Acid – ' + amountAcid;
-  $("result-acid-1").value = amountChemicals;
+  return [(amountProduct - 1), (amountReactant1 - factor1), (amountReactant2 - factor2)];
 }
 
-// 2. ADDITIVE - CEMENT MIX
-const calcCementMix = () => {
-  const capacity = $("result-capacity").value;
-  const WEIGHT_SAND = 5;
-  const WEIGHT_SAWDUST = 3;
-  let [totalWeight, amountCementMix, amountSand, amountSawdust] = [0, 0, 0, 0]
+// RATIO FOR REDUCTIVE PROCESSES
+const ratioReductive = (capacity, weight1, weight2, factor1, factor2) => {
+  let [totalWeight, amountProduct, amountReactant1, amountReactant2] = [0, 0, 0, 0]
   while (totalWeight <= capacity) {
-	  amountCementMix ++;
-	  amountSand = amountCementMix * 5;
-    amountSawdust = amountCementMix * 2;
-    totalWeight = amountSand * WEIGHT_SAND + amountSawdust * WEIGHT_SAWDUST;
+	  amountProduct ++;
+	  amountReactant1 = amountProduct / factor1;
+    amountReactant2 = amountProduct / factor2;
+    totalWeight = amountReactant1 * weight1 + amountReactant2 * weight2;
   }
-  $("item-2-cementmix").childNodes[0].textContent = 'Cement Mix – ' + (amountCementMix - 1);
-  $("result-cementmix-1").value = amountSand - 5;
-  $("result-cementmix-2").value = amountSawdust - 2;
+  while (!Number.isInteger(amountReactant2)) {
+    amountProduct --;
+    amountReactant1 = amountProduct / factor1;
+    amountReactant2 = amountProduct / factor2;
+  }
+  return [amountProduct, amountReactant1, amountReactant2];
 }
 
-// 3. ADDITIVE - CONCRETE
-const calcConcrete = () => {
-  const capacity = $("result-capacity").value;
-  const WEIGHT_CEMENT_MIX = 25;
-  const WEIGHT_TREATED_WATER = 100;
-  let [totalWeight, amountConcrete, amountCementMix, amountTreatedWater] = [0, 0, 0, 0]
-  while (totalWeight <= capacity) {
-	  amountConcrete ++;
-	  amountCementMix = amountConcrete * 5;
-    amountTreatedWater = amountConcrete * 1;
-    totalWeight = amountCementMix * WEIGHT_CEMENT_MIX + amountTreatedWater * WEIGHT_TREATED_WATER;
+// RATIO RESULTS TO HTML
+const resultsToHTML = (capacity2, item, results1, results2, parent1, parent2) => {
+  if (capacity2 == 0) {
+    $(item).insertAdjacentHTML('beforeend', '<span class="temp">' + ' – ' + results1[0] + '</span>');
+    $(parent1).insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results1[1] + '</b></p>');
+    $(parent2).insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results1[2] + '</b></p>');
+  } else {
+    $(item).insertAdjacentHTML('beforeend', '<span class="temp">' + ' – ' + results1[0] + ' + ' + results2[0] + '</span>');
+    $(parent1).insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results1[1] + '</b> → <span class="text-small">MK14</span></p>');
+    $(parent1).insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results2[1] + '</b> → <span class="text-small">MK15</span></p>');
+    $(parent2).insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results1[2] + '</b> → <span class="text-small">MK14</span></p>');
+    $(parent2).insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results2[2] + '</b> → <span class="text-small">MK15</span></p>');
   }
-  $("item-3-concrete").childNodes[0].textContent = 'Concrete – ' + (amountConcrete - 1);
-  $("result-concrete-1").value = amountCementMix - 5;
-  $("result-concrete-2").value = amountTreatedWater - 1;
 }
 
-// 4. ADDITIVE - EXPLOSIVE
-const calcExplosive = () => {
-  const capacity = $("result-capacity").value;
-  const WEIGHT_KEROSENE = 25;
-  const WEIGHT_SULFUR = 5;
-  let [totalWeight, amountExplosive, amountKerosene, amountSulfur] = [0, 0, 0, 0]
-  while (totalWeight <= capacity) {
-	  amountExplosive ++;
-	  amountKerosene = amountExplosive * 8;
-    amountSulfur = amountExplosive * 10;
-    totalWeight = amountKerosene * WEIGHT_KEROSENE + amountSulfur * WEIGHT_SULFUR;
-  }
-  $("item-4-explosive").childNodes[0].textContent = 'Explosive – ' + (amountExplosive - 1);
-  $("result-explosive-1").value = amountKerosene - 8;
-  $("result-explosive-2").value = amountSulfur - 10;
-}
+// COMPUTE RATIOS
+const ratioCompute = () => {
+  const capacities = calculateCapacity();
+  const capacity1 = capacities[0];
+  const capacity2 = capacities[1];
 
-// 5. REDUCTIVE - KEROSENE
-const calcKerosene = () => {
-  const capacity = $("result-capacity").value;
-  const WEIGHT_TREATED_WATER = 100;
-  const WEIGHT_CRUDE_OIL = 150;
-  let [totalWeight, amountKerosene, amountTreatedWater, amountCrudeOil] = [0, 0, 0, 0]
-  while (totalWeight <= capacity) {
-	  amountKerosene ++;
-	  amountTreatedWater = amountKerosene / 10;
-    amountCrudeOil = amountKerosene / (20 / 3);
-    totalWeight = amountTreatedWater * WEIGHT_TREATED_WATER + amountCrudeOil * WEIGHT_CRUDE_OIL;
-  }
-  while (!Number.isInteger(amountCrudeOil)) {
-    amountKerosene --;
-    amountTreatedWater = amountKerosene / 10;
-    amountCrudeOil = amountKerosene / (20 / 3);
-  }
-  $("item-5-kerosene").childNodes[0].textContent = 'Kerosene – ' + amountKerosene;
-  $("result-kerosene-1").value = amountTreatedWater;
-  $("result-kerosene-2").value = amountCrudeOil;
-}
+  // 1. ADDITIVE - CEMENT MIX
+  let results1 = ratioAdditive(capacity1, 5, 3, 5, 2);
+  let results2 = ratioAdditive(capacity2, 5, 3, 5, 2);
+  resultsToHTML(capacity2, 'item-1-cementmix', results1, results2, 'parent-cementmix-1', 'parent-cementmix-2');
 
-// 6. REDUCTIVE - SAND
-const calcSand = () => {
-  const capacity = $("result-capacity").value;
-  const WEIGHT_ROM = 15;
-  const WEIGHT_EXPLOSIVE = 250;
-  let [totalWeight, amountSand, amountROM, amountExplosive] = [0, 0, 0, 0]
-  while (totalWeight <= capacity) {
-	  amountSand ++;
-	  amountROM = amountSand / 6;
-    amountExplosive = amountSand / 90;
-    totalWeight = amountROM * WEIGHT_ROM + amountExplosive * WEIGHT_EXPLOSIVE;
-  }
-  while (!Number.isInteger(amountExplosive)) {
-    amountSand --;
-    amountROM = amountSand / 6;
-    amountExplosive = amountSand / 90;
-  }
-  $("item-6-sand").childNodes[0].textContent = 'Sand – ' + amountSand;
-  $("result-sand-1").value = amountROM;
-  $("result-sand-2").value = amountExplosive;
-}
+  // 2. ADDITIVE - CONCRETE
+  results1 = ratioAdditive(capacity1, 25, 100, 5, 1);
+  results2 = ratioAdditive(capacity2, 25, 100, 5, 1);
+  resultsToHTML(capacity2, 'item-2-concrete', results1, results2, 'parent-concrete-1', 'parent-concrete-2');
 
-// 7. ADDITIVE - TREATED WATER
-const calcTreatedWater = () => {
-  const capacity = $("result-capacity").value;
-  const WEIGHT_UNTREATED_WATER = 100;
-  const WEIGHT_ACID = 5;
-  let [totalWeight, amountTreatedWater, amountUntreatedWater, amountAcid] = [0, 0, 0, 0]
-  while (totalWeight <= capacity) {
-	  amountTreatedWater ++;
-	  amountUntreatedWater = amountTreatedWater * 1;
-    amountAcid = amountTreatedWater * 1;
-    totalWeight = amountUntreatedWater * WEIGHT_UNTREATED_WATER + amountAcid * WEIGHT_ACID;
-  }
-  $("item-7-treatedwater").childNodes[0].textContent = 'Treated Water – ' + (amountTreatedWater - 1);
-  $("result-treatedwater-1").value = amountUntreatedWater - 1;
-  $("result-treatedwater-2").value = amountAcid - 1;
-}
+  // 3. ADDITIVE - EXPLOSIVE
+  results1 = ratioAdditive(capacity1, 25, 5, 8, 10);
+  results2 = ratioAdditive(capacity2, 25, 5, 8, 10);
+  resultsToHTML(capacity2, 'item-3-explosive', results1, results2, 'parent-explosive-1', 'parent-explosive-2');
 
-const calcRatios = () => {
-  calculateCapacity();
-  calcAcid();
-  calcCementMix();
-  calcConcrete();
-  calcExplosive();
-  calcKerosene();
-  calcSand();
-  calcTreatedWater();
+  // 4. REDUCTIVE - KEROSENE
+  results1 = ratioReductive(capacity1, 100, 150, 10, (20 / 3));
+  results2 = ratioReductive(capacity2, 100, 150, 10, (20 / 3));
+  resultsToHTML(capacity2, 'item-4-kerosene', results1, results2, 'parent-kerosene-1', 'parent-kerosene-2');
+
+  // 5. REDUCTIVE - SAND
+  results1 = ratioReductive(capacity1, 15, 250, 6, 90);
+  results2 = ratioReductive(capacity2, 15, 250, 6, 90);
+  resultsToHTML(capacity2, 'item-5-sand', results1, results2, 'parent-sand-1', 'parent-sand-2');
+
+  // 6. ADDITIVE - TREATED WATER
+  results1 = ratioAdditive(capacity1, 100, 5, 1, 1);
+  results2 = ratioAdditive(capacity2, 100, 5, 1, 1);
+  resultsToHTML(capacity2, 'item-6-treatedwater', results1, results2, 'parent-treatedwater-1', 'parent-treatedwater-2');
 }
 
 window.onload = () => {
-  calcRatios();
+  calculateCapacity();
+  ratioCompute();
 }
 
 $('trunk').addEventListener('change', () => {
-  calcRatios();
+  document.querySelectorAll('.temp').forEach(e => e.remove());
+  calculateCapacity();
+  ratioCompute();
 });
 
-document.querySelectorAll('input[name="radio-prem"]').forEach((elem) => {
-  elem.addEventListener("change", function(event) {
-    calcRatios();
+document.querySelectorAll("input[name='radio-prem']").forEach((elem) => {
+  elem.addEventListener('change', function(event) {
+    document.querySelectorAll('.temp').forEach(e => e.remove());
+    calculateCapacity();
+    ratioCompute();
   });
 });
 
-document.querySelectorAll('input[name="radio-postop"]').forEach((elem) => {
-  elem.addEventListener("change", function(event) {
-    calcRatios();
+document.querySelectorAll("input[name='radio-postop']").forEach((elem) => {
+  elem.addEventListener('change', function(event) {
+    document.querySelectorAll('.temp').forEach(e => e.remove());
+    calculateCapacity();
+    ratioCompute();
   });
 });
