@@ -37,6 +37,7 @@ p,
 ol,
 ul,
 li {
+  font-weight: normal;
   margin: 0;
   padding: 0;
 }
@@ -80,7 +81,7 @@ nav {
 }
 .header-1,
 .header-2 {
-  font: 1.5rem var(--font-stack);
+  font-size: 1.5rem;
   margin: 1rem 0;
 }
 .header-2 {
@@ -96,12 +97,13 @@ main {
 .main-container {
   display: flex;
   flex-direction: column;
-  margin: 1rem auto 1rem;
+  margin: 2rem auto;
   max-width: 60rem;
 }
 .section-container {
   display: flex;
   flex-wrap: wrap;
+  gap: 2rem;
 }
 .section-container > section {
   flex: 1;
@@ -114,10 +116,10 @@ section > .section-header:not(:first-child) {
   margin-top: 2rem;
 }
 .section-header {
-  margin: 1rem;
+  margin: 0;
 }
 .section-body {
-  margin: 1rem;
+  margin: 1rem 0;
 }
 .link-blue {
   color: var(--color-link);
