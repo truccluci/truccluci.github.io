@@ -26,8 +26,13 @@ const calculateCapacity = () => {
     capacity1 = 9000 * multiple;
     capacity2 = 6000 * multiple;
   }
-  $('result-capacity').value = Math.round(capacity1 + capacity2);
   return [capacity1, capacity2];
+}
+
+// CAPACITY TO HTML
+const capacityToHTML = () => {
+  const capacities = calculateCapacity();
+  $('result-capacity').insertAdjacentHTML('beforeend', '<span class="temp"><b>' + Math.round(capacities[0] + capacities[1]) + '</b></span>');
 }
 
 // RATIO FOR ADDITIVE PROCESSES
@@ -112,20 +117,20 @@ const ratioCompute = () => {
 }
 
 window.onload = () => {
-  calculateCapacity();
+  capacityToHTML();
   ratioCompute();
 }
 
 $('trunk').addEventListener('change', () => {
   document.querySelectorAll('.temp').forEach(e => e.remove());
-  calculateCapacity();
+  capacityToHTML();
   ratioCompute();
 });
 
 document.querySelectorAll("input[name='radio-prem']").forEach((elem) => {
   elem.addEventListener('change', function(event) {
     document.querySelectorAll('.temp').forEach(e => e.remove());
-    calculateCapacity();
+    capacityToHTML();
     ratioCompute();
   });
 });
@@ -133,7 +138,7 @@ document.querySelectorAll("input[name='radio-prem']").forEach((elem) => {
 document.querySelectorAll("input[name='radio-postop']").forEach((elem) => {
   elem.addEventListener('change', function(event) {
     document.querySelectorAll('.temp').forEach(e => e.remove());
-    calculateCapacity();
+    capacityToHTML();
     ratioCompute();
   });
 });
