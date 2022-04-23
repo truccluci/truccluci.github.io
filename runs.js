@@ -100,23 +100,10 @@ const calculateRuns = () => {
   $('result-runs-2').value = Math.ceil(requiredRawgas / (rawgasProcTrunk1 + rawgasProcTrunk2));
 }
 
-const apiTest1 = () => {
-  let request = new XMLHttpRequest();
-  request.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      console.log(this.responseText);
-    }
-  };
-  request.open('GET', 'https://server.tycoon.community:30120/status/data/339017');
-  request.setRequestHeader('X-Tycoon-Key', 'uNdVsIia8HoqCDLHbsWEnhED58w5wds6z1DZj');
-  request.send();
-}
-
 window.onload = () => {
   capacityToHTML();
   calculateRuns();
   $('calculateRuns').onclick = calculateRuns;
-  apiTest1();
 }
 
 $('trunk').addEventListener('change', () => {
