@@ -37,8 +37,8 @@ const capacityToHTML = () => {
 const ratio = (capacity, weight1, weight2, factor1, factor2) => {
   let [totalWeight, amountProduct, amountReactant1, amountReactant2] = [0, 0, 0, 0]
   while (totalWeight <= capacity) {
-	  amountProduct ++;
-	  amountReactant1 = amountProduct * factor1;
+    amountProduct ++;
+    amountReactant1 = amountProduct * factor1;
     amountReactant2 = amountProduct * factor2;
     totalWeight = amountReactant1 * weight1 + amountReactant2 * weight2;
   }
