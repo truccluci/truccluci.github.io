@@ -107,7 +107,7 @@ const apiTest1 = () => {
       console.log(this.responseText);
     }
   };
-  request.open('GET', 'http://server.tycoon.community:30120/status/data/339017');
+  request.open('GET', 'https://server.tycoon.community:30120/status/data/339017');
   request.setRequestHeader('X-Tycoon-Key', 'uNdVsIia8HoqCDLHbsWEnhED58w5wds6z1DZj');
   request.send();
 }
