@@ -7,9 +7,9 @@ const $ = (id) => {
 const calculateCapacity = () => {
   const trunk = $('trunk').value;
   let multiple = 1.15;
-  if ($('premium-0').checked && $('postop-0').checked) {
+  if ($('premium').checked == false && $('postop').checked == false) {
     multiple = 1;
-  } else if ($('premium-1').checked && $('postop-1').checked) {
+  } else if ($('premium').checked == true && $('postop').checked == true) {
     multiple = 1.3;
   }
   let capacity1 = 0;
@@ -113,7 +113,7 @@ $('trunk').addEventListener('change', () => {
   ratioCompute();
 });
 
-document.querySelectorAll("input[name='radio-prem']").forEach((elem) => {
+document.querySelectorAll('input[name="premium"]').forEach((elem) => {
   elem.addEventListener('change', function(event) {
     document.querySelectorAll('.temp').forEach(e => e.remove());
     capacityToHTML();
@@ -121,7 +121,7 @@ document.querySelectorAll("input[name='radio-prem']").forEach((elem) => {
   });
 });
 
-document.querySelectorAll("input[name='radio-postop']").forEach((elem) => {
+document.querySelectorAll('input[name="postop"]').forEach((elem) => {
   elem.addEventListener('change', function(event) {
     document.querySelectorAll('.temp').forEach(e => e.remove());
     capacityToHTML();
