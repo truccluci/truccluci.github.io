@@ -6,22 +6,18 @@ const $ = (id) => {
 // CALCULATE TRUNK CAPACITY
 const calculateCapacity = () => {
   const trunk = $('trunk').value;
-  let multiple;
-  if ($('premium-0').checked && $('postop-0').checked) {
+  let multiple = 1.15;
+  if ($('premium').checked == false && $('postop').checked == false) {
     multiple = 1;
-  } else if ($('premium-1').checked && $('postop-1').checked) {
+  } else if ($('premium').checked == true && $('postop').checked == true) {
     multiple = 1.3;
-  } else {
-    multiple = 1.15;
   }
-  let capacity1;
-  let capacity2;
+  let capacity1 = 0;
+  let capacity2 = 0;
   if (trunk == 'mk13') {
     capacity1 = 8500 * multiple;
-    capacity2 = 0;
   } else if (trunk == 'mk14') {
     capacity1 = 9000 * multiple;
-    capacity2 = 0;
   } else if (trunk == 'mk14mk15') {
     capacity1 = 9000 * multiple;
     capacity2 = 6000 * multiple;
@@ -116,7 +112,7 @@ $('trunk').addEventListener('change', () => {
   calculateRuns();
 });
 
-document.querySelectorAll('input[name="radio-prem"]').forEach((elem) => {
+document.querySelectorAll('input[name="premium"]').forEach((elem) => {
   elem.addEventListener('change', function(event) {
     document.querySelectorAll('.temp').forEach(e => e.remove());
     capacityToHTML();
@@ -124,7 +120,7 @@ document.querySelectorAll('input[name="radio-prem"]').forEach((elem) => {
   });
 });
 
-document.querySelectorAll('input[name="radio-postop"]').forEach((elem) => {
+document.querySelectorAll('input[name="postop"]').forEach((elem) => {
   elem.addEventListener('change', function(event) {
     document.querySelectorAll('.temp').forEach(e => e.remove());
     capacityToHTML();
