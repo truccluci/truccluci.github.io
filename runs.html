@@ -28,99 +28,99 @@
           <section class="width-two-thirds">
             <form id="form-ratings" onSubmit="return false;">
               <!-- INPUTS -->
-              <div class="label-no-input"><b>Inputs</b></div>
-              <label for="trunk">Trunk Type:</label>
-              <select id="trunk">
+              <div class="form-section-header"><b>Inputs</b></div>
+              <label class="form-col-1" for="trunk">Trunk Type:</label>
+              <select class="form-col-2" id="trunk">
                 <option value="mk13">MK13</option>
                 <option value="mk14">MK14</option>
                 <option value="mk14mk15">MK14 + MK15</option>
               </select>
 
-              <label for="premium">Tycoon Premium:</label>
-              <span>
+              <label class="form-col-1" for="premium">Tycoon Premium:</label>
+              <div class="form-col-2">
                 <input type="checkbox" id="premium" name="premium" checked>
-              </span>
+              </div>
 
-              <label for="postop">Post-Op Perk:</label>
-              <span>
+              <label class="form-col-1" for="postop">Post-Op Perk:</label>
+              <div class="form-col-2">
                 <input type="checkbox" id="postop" name="postop">
-              </span>
+              </div>
 
-              <label for="concrete"># of Concrete Wanted:</label>
-              <input type="number" id="concrete" min="0" max="100000" step="10" value="1000">
+              <label class="form-col-1" for="concrete"># of Concrete Wanted:</label>
+              <input class="form-col-2" type="number" id="concrete" min="0" max="100000" step="10" value="1000">
 
-              <label>Capacity (kg):</label>
-              <span id="result-capacity"></span>
+              <div class="form-col-1">Capacity (kg):</div>
+              <div class="form-col-2" id="result-capacity"></div>
 
               <!-- 1. PICKUP: RAW GAS -->
-              <div class="label-no-input"><b>1. Pickup: Raw Gas</b></div>
-              <label>Runs:</label>
-              <span id="parent-rawgas"></span>
-              <label>Pickup at:</label>
-              <p>GSD Gas</p>
+              <div class="form-section-header"><b>1. Pickup: Raw Gas</b></div>
+              <div class="form-col-1">Runs:</div>
+              <div class="form-col-2" id="parent-rawgas"></div>
+              <div class="form-col-1">Pickup at:</div>
+              <div class="form-col-2">GSD Gas</div>
 
-              <!-- 2. REFINE: RAW GAS TO WASTE WATER -->
-              <div class="label-no-input"><b>2. Raw Gas → Waste Water</b></div>
-              <label>Runs:</label>
-              <span id="parent-wastewater"></span>
-              <label>Refine at:</label>
-              <p>Refinery</p>
+              <!-- 2. REFINE: RAW GAS TO WASTE WATER + CHEMICALS -->
+              <div class="form-section-header"><b>2. Raw Gas → Waste Water + Chemicals</b></div>
+              <div class="form-col-1">Runs:</div>
+              <div class="form-col-2" id="parent-wastewater"></div>
+              <div class="form-col-1">Refine at:</div>
+              <div class="form-col-2">Refinery</div>
 
               <!-- 3. REFINE: WASTE WATER TO SULFUR -->
-              <div class="label-no-input"><b>3. Waste Water → Sulfur</b></div>
-              <label>Runs:</label>
-              <span id="parent-sulfur"></span>
-              <label>Refine at:</label>
-              <p>Water Treatment Plant</p>
+              <div class="form-section-header"><b>3. Waste Water → Sulfur</b></div>
+              <div class="form-col-1">Runs:</div>
+              <div class="form-col-2" id="parent-sulfur"></div>
+              <div class="form-col-1">Refine at:</div>
+              <div class="form-col-2">Water Treatment Plant</div>
 
               <!-- 4. REFINE: CHEMICALS TO ACID -->
-              <div class="label-no-input"><b>4. Chemicals → Acid</b></div>
-              <label>Runs:</label>
-              <span id="parent-acid"></span>
-              <label>Refine at:</label>
-              <p>Chemical Laboratories</p>
+              <div class="form-section-header"><b>4. Chemicals → Acid</b></div>
+              <div class="form-col-1">Runs:</div>
+              <div class="form-col-2" id="parent-acid"></div>
+              <div class="form-col-1">Refine at:</div>
+              <div class="form-col-2">Chemical Laboratories</div>
 
               <!-- 5. PICKUP: UNFILTERED WATER -->
-              <div class="label-no-input"><b>5. Pickup: Unfiltered Water</b></div>
-              <label>Runs:</label>
-              <span id="parent-unfilteredwater"></span>
-              <label>Pickup at:</label>
-              <p>Land Act Reservoir</p>
+              <div class="form-section-header"><b>5. Pickup: Unfiltered Water</b></div>
+              <div class="form-col-1">Runs:</div>
+              <div class="form-col-2" id="parent-unfilteredwater"></div>
+              <div class="form-col-1">Pickup at:</div>
+              <div class="form-col-2">Land Act Reservoir</div>
 
               <!-- 6. REFINE: UNFILTERED WATER + ACID TO TREATED WATER -->
-              <div class="label-no-input"><b>6. Unfiltered Water + Acid → Treated Water</b></div>
-              <label>Runs:</label>
-              <span id="parent-treatedwater"></span>
-              <label>Refine at:</label>
-              <p>Water Treatment Plant</p>
+              <div class="form-section-header"><b>6. Unfiltered Water + Acid → Treated Water</b></div>
+              <div class="form-col-1">Runs:</div>
+              <div class="form-col-2" id="parent-treatedwater"></div>
+              <div class="form-col-1">Refine at:</div>
+              <div class="form-col-2">Water Treatment Plant</div>
 
               <!-- 7. PICKUP: CRUDE OIL -->
-              <div class="label-no-input"><b>7. Pickup: Crude Oil</b></div>
-              <label>Runs:</label>
-              <span id="parent-crudeoil"></span>
-              <label>Pickup at:</label>
-              <p>LS Oil</p>
+              <div class="form-section-header"><b>7. Pickup: Crude Oil</b></div>
+              <div class="form-col-1">Runs:</div>
+              <div class="form-col-2" id="parent-crudeoil"></div>
+              <div class="form-col-1">Pickup at:</div>
+              <div class="form-col-2">LS Oil</div>
 
               <!-- 8. REFINE: TREATED WATER + CRUDE OIL TO KEROSENE -->
-              <div class="label-no-input"><b>8. Treated Water + Crude Oil → Kerosene</b></div>
-              <label>Runs:</label>
-              <span id="parent-kerosene"></span>
-              <label>Refine at:</label>
-              <p>Refinery</p>
+              <div class="form-section-header"><b>8. Treated Water + Crude Oil → Kerosene</b></div>
+              <div class="form-col-1">Runs:</div>
+              <div class="form-col-2" id="parent-kerosene"></div>
+              <div class="form-col-1">Refine at:</div>
+              <div class="form-col-2">Refinery</div>
 
               <!-- 9. REFINE: KEROSENE + SULFUR TO EXPLOSIVE -->
-              <div class="label-no-input"><b>9. Kerosene + Sulfur → Explosive</b></div>
-              <label>Runs:</label>
-              <span id="parent-explosive"></span>
-              <label>Refine at:</label>
-              <p>Military Workshop</p>
+              <div class="form-section-header"><b>9. Kerosene + Sulfur → Explosive</b></div>
+              <div class="form-col-1">Runs:</div>
+              <div class="form-col-2" id="parent-explosive"></div>
+              <div class="form-col-1">Refine at:</div>
+              <div class="form-col-2">Military Workshop</div>
 
               <!-- 10. REFINE: RAW ORE MIX + EXPLOSIVE TO SAND -->
-              <div class="label-no-input"><b>10. Raw Ore Mix + Explosive → Sand</b></div>
-              <label>Runs:</label>
-              <span id="parent-sand"></span>
-              <label>Refine at:</label>
-              <p>Deep Quarry</p>
+              <div class="form-section-header"><b>10. Raw Ore Mix + Explosive → Sand</b></div>
+              <div class="form-col-1">Runs:</div>
+              <div class="form-col-2" id="parent-sand"></div>
+              <div class="form-col-1">Refine at:</div>
+              <div class="form-col-2">Deep Quarry</div>
             </form>
           </section>
 
