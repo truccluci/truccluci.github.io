@@ -62,7 +62,7 @@ const calculateRuns = () => {
   runsToHTML(result, 'parent-sulfur');
 
   // 4. REFINE: CHEMICALS TO ACID
-  result = runs(capacity1, capacity2, 5, (Math.ceil(Math.ceil(sand / 90) * 8 / 20) * 2));
+  result = runs(capacity1, capacity2, 25, (Math.ceil(Math.ceil(sand / 90) * 8 / 20) * 2 / 4));
   runsToHTML(result, 'parent-acid');
 
   // 5. PICKUP: UNFILTERED WATER
