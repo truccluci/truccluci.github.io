@@ -93,7 +93,6 @@ const calculateRuns = () => {
 window.onload = () => {
   capacityToHTML();
   calculateRuns();
-  $('calculateRuns').onclick = calculateRuns;
 }
 
 $('trunk').addEventListener('change', () => {
