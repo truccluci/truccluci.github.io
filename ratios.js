@@ -1,15 +1,11 @@
 // 2022-04-19 - luci
-const $ = (id) => {
-    return document.getElementById(id);
-}
-
 // CALCULATE TRUNK CAPACITY
 const calculateCapacity = () => {
-  const trunk = $('trunk').value;
+  const trunk = document.getElementById('trunk').value;
   let multiple = 1.15;
-  if ($('premium').checked == false && $('postop').checked == false) {
+  if (document.getElementById('premium').checked == false && document.getElementById('postop').checked == false) {
     multiple = 1;
-  } else if ($('premium').checked == true && $('postop').checked == true) {
+  } else if (document.getElementById('premium').checked == true && document.getElementById('postop').checked == true) {
     multiple = 1.3;
   }
   let capacity1 = 0;
@@ -28,7 +24,7 @@ const calculateCapacity = () => {
 // CAPACITY TO HTML
 const capacityToHTML = () => {
   const capacities = calculateCapacity();
-  $('result-capacity').insertAdjacentHTML('beforeend', '<span class="temp"><b>' + Math.round(capacities[0] + capacities[1]) + '</b></span>');
+  document.getElementById('result-capacity').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + Math.round(capacities[0] + capacities[1]) + '</b></p>');
 }
 
 // RATIO CALCULATOR
@@ -53,15 +49,15 @@ const ratio = (capacity, weight1, weight2, factor1, factor2) => {
 // RATIO RESULTS TO HTML
 const resultsToHTML = (capacity2, item, results1, results2, parent1, parent2) => {
   if (capacity2 == 0) {
-    $(item).insertAdjacentHTML('beforeend', '<span class="temp">' + ' – ' + results1[0] + '</span>');
-    $(parent1).insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results1[1] + '</b></p>');
-    $(parent2).insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results1[2] + '</b></p>');
+    document.getElementById(item).insertAdjacentHTML('beforeend', '<span class="temp">' + ' – ' + results1[0] + '</span>');
+    document.getElementById(parent1).insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results1[1] + '</b></p>');
+    document.getElementById(parent2).insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results1[2] + '</b></p>');
   } else {
-    $(item).insertAdjacentHTML('beforeend', '<span class="temp">' + ' – ' + results1[0] + ' + ' + results2[0] + '</span>');
-    $(parent1).insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results1[1] + '</b> → <span class="text-small">MK14</span></p>');
-    $(parent1).insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results2[1] + '</b> → <span class="text-small">MK15</span></p>');
-    $(parent2).insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results1[2] + '</b> → <span class="text-small">MK14</span></p>');
-    $(parent2).insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results2[2] + '</b> → <span class="text-small">MK15</span></p>');
+    document.getElementById(item).insertAdjacentHTML('beforeend', '<span class="temp">' + ' – ' + results1[0] + ' + ' + results2[0] + '</span>');
+    document.getElementById(parent1).insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results1[1] + '</b> → <span class="text-small">MK14</span></p>');
+    document.getElementById(parent1).insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results2[1] + '</b> → <span class="text-small">MK15</span></p>');
+    document.getElementById(parent2).insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results1[2] + '</b> → <span class="text-small">MK14</span></p>');
+    document.getElementById(parent2).insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results2[2] + '</b> → <span class="text-small">MK15</span></p>');
   }
 }
 
@@ -107,7 +103,7 @@ window.onload = () => {
   ratioCompute();
 }
 
-$('trunk').addEventListener('change', () => {
+document.getElementById('trunk').addEventListener('change', () => {
   document.querySelectorAll('.temp').forEach(e => e.remove());
   capacityToHTML();
   ratioCompute();
