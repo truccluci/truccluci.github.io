@@ -44,7 +44,7 @@ const calculateRuns = () => {
   const capacities = calculateCapacity();
   const capacity1 = capacities[0];
   const capacity2 = capacities[1];
-  const concrete = document.getElementById('concrete').value;
+  const concrete = Number(document.getElementById('concrete').value);
   const sand = concrete * 25;
 
   // 1. PICKUP: RAW GAS
@@ -58,15 +58,15 @@ const calculateRuns = () => {
   runsToHTML(result, 'parent-sulfur');
 
   // 4. REFINE: CHEMICALS TO ACID
-  result = runs(capacity1, capacity2, 25, (Math.ceil(Math.ceil(sand / 90) * 8 / 20) * 2 / 4));
+  result = runs(capacity1, capacity2, 25, ((Math.ceil(Math.ceil(sand / 90) * 8 / 20) * 2 / 4) + (concrete / 4)));
   runsToHTML(result, 'parent-acid');
 
   // 5. PICKUP: UNFILTERED WATER
-  result = runs(capacity1, capacity2, 100, (Math.ceil(Math.ceil(sand / 90) * 8 / 20) * 2));
+  result = runs(capacity1, capacity2, 100, ((Math.ceil(Math.ceil(sand / 90) * 8 / 20) * 2) + concrete));
   runsToHTML(result, 'parent-unfilteredwater');
 
   // 6. REFINE: UNFILTERED WATER + ACID TO TREATED WATER
-  result = runs(capacity1, capacity2, (1 * 100 + 1 * 5), (Math.ceil(Math.ceil(sand / 90) * 8 / 20) * 2));
+  result = runs(capacity1, capacity2, (1 * 100 + 1 * 5), ((Math.ceil(Math.ceil(sand / 90) * 8 / 20) * 2) + concrete));
   runsToHTML(result, 'parent-treatedwater');
 
   // 7. PICKUP: CRUDE OIL
@@ -81,9 +81,31 @@ const calculateRuns = () => {
   result = runs(capacity1, capacity2, (8 * 25 + 10 * 5), (Math.ceil(sand / 90)));
   runsToHTML(result, 'parent-explosive');
 
-  // 10. REFINE: RAW ORE MIX + EXPLOSIVE TO SAND
+  // 10. PICKUP: QUARRY RUBBLE
+  result = runs(capacity1, capacity2, 150, (Math.ceil(Math.ceil(sand / 90) * 15 / 4)));
+  runsToHTML(result, 'parent-quarryrubble');
+
+  // 11. REFINE: QUARRY RUBBLE TO ROM
+  runsToHTML(result, 'parent-raworemix');
+
+  // 12. REFINE: RAW ORE MIX + EXPLOSIVE TO SAND
   result = runs(capacity1, capacity2, (1 * 250 + 15 * 15), (Math.ceil(sand / 90)));
   runsToHTML(result, 'parent-sand');
+
+  // 13. PICKUP: LOGS
+  result = runs(capacity1, capacity2, 60, concrete);
+  runsToHTML(result, 'parent-logs');
+
+  // 14. REFINE: LOGS TO SAWDUST
+  runsToHTML(result, 'parent-sawdust');
+
+  // 15. REFINE: SAND + SAWDUST TO CEMENT MIX
+  result = runs(capacity1, capacity2, (5 * 5 + 2 * 3), (concrete * 5));
+  runsToHTML(result, 'parent-cementmix');
+
+  // 16. REFINE: CEMENT MIX + TREATED WATER TO CONCRETE
+  result = runs(capacity1, capacity2, (5 * 25 + 1 * 100), concrete);
+  runsToHTML(result, 'parent-concrete');
 }
 
 window.onload = () => {
