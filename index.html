@@ -26,70 +26,70 @@
       <div class="main-container">
         <div class="section-container">
           <section class="width-two-thirds">
-            <form id="form-ratings">
+            <form id="form-ratings" onSubmit="return false;">
               <!-- INPUTS -->
-              <div class="label-no-input"><b>Inputs</b></div>
-              <label for="trunk">Trunk Type:</label>
-              <select id="trunk">
+              <div class="form-section-header"><b>Inputs</b></div>
+              <label class="form-col-1" for="trunk">Trunk Type:</label>
+              <select class="form-col-2" id="trunk">
                 <option value="mk13">MK13</option>
                 <option value="mk14">MK14</option>
                 <option value="mk14mk15">MK14 + MK15</option>
               </select>
 
-              <label for="premium">Tycoon Premium:</label>
-              <span>
+              <label class="form-col-1" for="premium">Tycoon Premium:</label>
+              <div class="form-col-2">
                 <input type="checkbox" id="premium" name="premium" checked>
-              </span>
+              </div>
 
-              <label for="postop">Post-Op Perk:</label>
-              <span>
+              <label class="form-col-1" for="postop">Post-Op Perk:</label>
+              <div class="form-col-2">
                 <input type="checkbox" id="postop" name="postop">
-              </span>
+              </div>
 
-              <label>Capacity (kg):</label>
-              <span id="result-capacity"></span>
+              <div class="form-col-1">Capacity (kg):</div>
+              <div class="form-col-2" id="result-capacity"></div>
 
               <!-- 1. CEMENT MIX -->
-              <div class="label-no-input" id="item-1-cementmix"><b>Cement Mix</b></div>
-              <label>Sand:</label>
-              <span id="parent-cementmix-1"></span>
-              <label>Sawdust:</label>
-              <span id="parent-cementmix-2"></span>
+              <div class="form-section-header" id="item-1-cementmix"><b>Cement Mix</b></div>
+              <div class="form-col-1">Sand:</div>
+              <div class="form-col-2" id="parent-cementmix-1"></div>
+              <div class="form-col-1">Sawdust:</div>
+              <div class="form-col-2" id="parent-cementmix-2"></div>
 
               <!-- 2. CONCRETE -->
-              <div class="label-no-input" id="item-2-concrete"><b>Concrete</b></div>
-              <label>Cement Mix:</label>
-              <span id="parent-concrete-1"></span>
-              <label>Treated Water:</label>
-              <span id="parent-concrete-2"></span>
+              <div class="form-section-header" id="item-2-concrete"><b>Concrete</b></div>
+              <div class="form-col-1">Cement Mix:</div>
+              <div class="form-col-2" id="parent-concrete-1"></div>
+              <div class="form-col-1">Treated Water:</div>
+              <div class="form-col-2" id="parent-concrete-2"></div>
 
               <!-- 3. EXPLOSIVE -->
-              <div class="label-no-input" id="item-3-explosive"><b>Explosive</b></div>
-              <label>Kerosene:</label>
-              <span id="parent-explosive-1"></span>
-              <label>Sulfur:</label>
-              <span id="parent-explosive-2"></span>
+              <div class="form-section-header" id="item-3-explosive"><b>Explosive</b></div>
+              <div class="form-col-1">Kerosene:</div>
+              <div class="form-col-2" id="parent-explosive-1"></div>
+              <div class="form-col-1">Sulfur:</div>
+              <div class="form-col-2" id="parent-explosive-2"></div>
 
               <!-- 4. KEROSENE -->
-              <div class="label-no-input" id="item-4-kerosene"><b>Kerosene</b></div>
-              <label>Treated Water:</label>
-              <span id="parent-kerosene-1"></span>
-              <label>Crude Oil:</label>
-              <span id="parent-kerosene-2"></span>
+              <div class="form-section-header" id="item-4-kerosene"><b>Kerosene</b></div>
+              <div class="form-col-1">Treated Water:</div>
+              <div class="form-col-2" id="parent-kerosene-1"></div>
+              <div class="form-col-1">Crude Oil:</div>
+              <div class="form-col-2" id="parent-kerosene-2"></div>
 
               <!-- 5. SAND -->
-              <div class="label-no-input" id="item-5-sand"><b>Sand</b></div>
-              <label>Raw Ore Mix:</label>
-              <span id="parent-sand-1"></span>
-              <label>Explosive:</label>
-              <span id="parent-sand-2"></span>
+              <div class="form-section-header" id="item-5-sand"><b>Sand</b></div>
+              <div class="form-col-1">Raw Ore Mix:</div>
+              <div class="form-col-2" id="parent-sand-1"></div>
+              <div class="form-col-1">Explosive:</div>
+              <div class="form-col-2" id="parent-sand-2"></div>
 
               <!-- 6. TREATED WATER -->
-              <div class="label-no-input" id="item-6-treatedwater"><b>Treated Water</b></div>
-              <label>Unfiltered Water:</label>
-              <span id="parent-treatedwater-1"></span>
-              <label>Acid:</label>
-              <span id="parent-treatedwater-2"></span>
+              <div class="form-section-header" id="item-6-treatedwater"><b>Treated Water</b></div>
+              <div class="form-col-1">Unfiltered Water:</div>
+              <div class="form-col-2" id="parent-treatedwater-1"></div>
+              <div class="form-col-1">Acid:</div>
+              <div class="form-col-2" id="parent-treatedwater-2"></div>
             </form>
           </section>
 
