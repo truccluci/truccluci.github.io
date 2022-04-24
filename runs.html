@@ -17,7 +17,7 @@
 
     <header>
       <div class="header-container">
-        <h1 class="header-1">Runs calculator for making sand.</h1>
+        <h1 class="header-1">Runs calculator for making Concrete.</h1>
         <h2 class="header-2">4 Inputs: Trunk Type, Tycoon Premium, Post-Op Perk, # of Concrete Wanted.</h2>
       </div>
     </header>
@@ -115,12 +115,54 @@
               <div class="form-col-1">Refine at:</div>
               <div class="form-col-2">Military Workshop</div>
 
-              <!-- 10. REFINE: RAW ORE MIX + EXPLOSIVE TO SAND -->
-              <div class="form-section-header"><b>10. Raw Ore Mix + Explosive → Sand</b></div>
+              <!-- 10. PICKUP: QUARRY RUBBLE -->
+              <div class="form-section-header"><b>10. Pickup: Quarry Rubble</b></div>
+              <div class="form-col-1">Runs:</div>
+              <div class="form-col-2" id="parent-quarryrubble"></div>
+              <div class="form-col-1">Pickup at:</div>
+              <div class="form-col-2">Quarry</div>
+
+              <!-- 11. REFINE: QUARRY RUBBLE TO ROM -->
+              <div class="form-section-header"><b>11. Quarry Rubble → Raw Ore Mix</b></div>
+              <div class="form-col-1">Runs:</div>
+              <div class="form-col-2" id="parent-raworemix"></div>
+              <div class="form-col-1">Refine at:</div>
+              <div class="form-col-2">Filtering Plant</div>
+
+              <!-- 12. REFINE: RAW ORE MIX + EXPLOSIVE TO SAND -->
+              <div class="form-section-header"><b>12. Raw Ore Mix + Explosive → Sand</b></div>
               <div class="form-col-1">Runs:</div>
               <div class="form-col-2" id="parent-sand"></div>
               <div class="form-col-1">Refine at:</div>
               <div class="form-col-2">Deep Quarry</div>
+
+              <!-- 13. PICKUP: LOGS -->
+              <div class="form-section-header"><b>13. Pickup: Logs</b></div>
+              <div class="form-col-1">Runs:</div>
+              <div class="form-col-2" id="parent-logs"></div>
+              <div class="form-col-1">Pickup at:</div>
+              <div class="form-col-2">Log Camp</div>
+
+              <!-- 14. REFINE: LOGS TO SAWDUST -->
+              <div class="form-section-header"><b>14. Logs → Sawdust</b></div>
+              <div class="form-col-1">Runs:</div>
+              <div class="form-col-2" id="parent-sawdust"></div>
+              <div class="form-col-1">Refine at:</div>
+              <div class="form-col-2">Sawmill</div>
+
+              <!-- 15. REFINE: SAND + SAWDUST TO CEMENT MIX -->
+              <div class="form-section-header"><b>15. Sand + Sawdust → Cement Mix</b></div>
+              <div class="form-col-1">Runs:</div>
+              <div class="form-col-2" id="parent-cementmix"></div>
+              <div class="form-col-1">Refine at:</div>
+              <div class="form-col-2">Quarry</div>
+
+              <!-- 16. REFINE: CEMENT MIX + TREATED WATER TO CONCRETE -->
+              <div class="form-section-header"><b>16. Cement Mix + Treated Water → Concrete</b></div>
+              <div class="form-col-1">Runs:</div>
+              <div class="form-col-2" id="parent-concrete"></div>
+              <div class="form-col-1">Refine at:</div>
+              <div class="form-col-2">Filtering Plant</div>
             </form>
           </section>
 
@@ -130,10 +172,7 @@
               Calculates runs for 3 different trunk types, with/without Tycoon Premium, and with/without the Post-Op Perk active.
             </p>
             <p class="section-body">
-              Assumes 10 processes for obtaining sand using the ROM-Explosive method. The process of obtaining ROMs is not included. The processes are numbered as a rough flow of events, not a strict flow.
-            </p>
-            <p class="section-body">
-              Treated Water runs are for the Diluted Fuel Refining process to make kerosene. Does not take into account water needed for making concrete.
+              16 processes for making Concrete using the ROM-Explosive method for Sand. The processes are numbered as a rough flow of events, not a strict flow.
             </p>
             <h3 class="section-header"><b>Ratios</b></h3>
             <p class="section-body">
