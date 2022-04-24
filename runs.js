@@ -31,7 +31,19 @@ const capacityToHTML = () => {
   $('result-capacity').insertAdjacentHTML('beforeend', '<span class="temp"><b>' + Math.round(capacities[0] + capacities[1]) + '</b></span>');
 }
 
-// CALCULATE RUNS
+// RUNS CALCULATOR
+const runs = (capacity1, capacity2, processWeight, nProcesses) => {
+  const nProcessesTrunk1 = Math.floor(capacity1 / processWeight);
+  const nProcessesTrunk2 = Math.floor(capacity2 / processWeight);
+  return Math.ceil(nProcesses / (nProcessesTrunk1 + nProcessesTrunk2));
+}
+
+// RUNS RESULTS TO HTML
+const runsToHTML = (result, parent) => {
+  $(parent).insertAdjacentHTML('beforeend', '<p class="temp"><b>' + result + '</b></p>');
+}
+
+// COMPUTE RUNS
 const calculateRuns = () => {
   const capacities = calculateCapacity();
   const capacity1 = capacities[0];
@@ -39,65 +51,43 @@ const calculateRuns = () => {
   const concrete = $('concrete').value;
   const sand = concrete * 25;
 
-  // 10. Raw Ore Mix + Explosive to Sand
-  let nSandProc = Math.ceil(sand / 90);
-  const weightSandProc = 1 * 250 + 15 * 15;
-  let sandProcTrunk1 = Math.floor(capacity1 / weightSandProc);
-  let sandProcTrunk2 = Math.floor(capacity2 / weightSandProc);
-  $('result-runs-10').value = Math.ceil(nSandProc / (sandProcTrunk1 + sandProcTrunk2));
+  // 1. PICKUP: RAW GAS
+  // 2. REFINE: RAW GAS TO WASTE WATER
+  let result = runs(capacity1, capacity2, 150, (Math.ceil(Math.ceil(sand / 90) * 10 / 5)));
+  runsToHTML(result, 'parent-rawgas');
+  runsToHTML(result, 'parent-wastewater');
 
-  // 9. Kerosene + Sulfur to Explosive
-  const weightExplosive = 8 * 25 + 10 * 5;
-  let expProcTrunk1 = Math.floor(capacity1 / weightExplosive);
-  let expProcTrunk2 = Math.floor(capacity2 / weightExplosive);
-  $('result-runs-9').value = Math.ceil(nSandProc / (expProcTrunk1 + expProcTrunk2));
+  // 3. REFINE: WASTE WATER TO SULFUR
+  result = runs(capacity1, capacity2, 50, (Math.ceil(Math.ceil(sand / 90) * 10 / 5)));
+  runsToHTML(result, 'parent-sulfur');
 
-  // 8. Treated Water + Crude Oil to Kerosene
-  const weightKerosene = 2 * 100 + 3 * 150;
-  let keroProcTrunk1 = Math.floor(capacity1 / weightKerosene);
-  let keroProcTrunk2 = Math.floor(capacity2 / weightKerosene);
-  $('result-runs-8').value = Math.ceil((nSandProc * 8) / ((keroProcTrunk1 + keroProcTrunk2) * 20));
+  // 4. REFINE: CHEMICALS TO ACID
+  result = runs(capacity1, capacity2, 5, (Math.ceil(Math.ceil(sand / 90) * 8 / 20) * 2));
+  runsToHTML(result, 'parent-acid');
 
-  // 7. Pickup: Crude Oil
-  let requiredCrudeoil = Math.ceil(nSandProc * 8 / 20) * 3;
-  const weightCrudeoil = 150;
-  let oilProcTrunk1 = Math.floor(capacity1 / weightCrudeoil);
-  let oilProcTrunk2 = Math.floor(capacity2 / weightCrudeoil);
-  $('result-runs-7').value = Math.ceil(requiredCrudeoil / (oilProcTrunk1 + oilProcTrunk2));
+  // 5. PICKUP: UNFILTERED WATER
+  result = runs(capacity1, capacity2, 100, (Math.ceil(Math.ceil(sand / 90) * 8 / 20) * 2));
+  runsToHTML(result, 'parent-unfilteredwater');
 
-  // 6. Unfiltered Water + Acid to Treated Water
-  let requiredWater = Math.ceil(nSandProc * 8 / 20) * 2;
-  const weightTreatedwaterProc = 1 * 100 + 1 * 5;
-  let waterProcTrunk1 = Math.floor(capacity1 / weightTreatedwaterProc);
-  let waterProcTrunk2 = Math.floor(capacity2 / weightTreatedwaterProc);
-  $('result-runs-6').value = Math.ceil(requiredWater / (waterProcTrunk1 + waterProcTrunk2));
+  // 6. REFINE: UNFILTERED WATER + ACID TO TREATED WATER
+  result = runs(capacity1, capacity2, (1 * 100 + 1 * 5), (Math.ceil(Math.ceil(sand / 90) * 8 / 20) * 2));
+  runsToHTML(result, 'parent-treatedwater');
 
-  // 5. Pickup: Unfiltered Water
-  const weightUnfilteredwater = 100;
-  let unfilteredProcTrunk1 = Math.floor(capacity1 / weightUnfilteredwater);
-  let unfilteredProcTrunk2 = Math.floor(capacity2 / weightUnfilteredwater);
-  $('result-runs-5').value = Math.ceil(requiredWater / (unfilteredProcTrunk1 + unfilteredProcTrunk2));
+  // 7. PICKUP: CRUDE OIL
+  result = runs(capacity1, capacity2, 150, (Math.ceil(Math.ceil(sand / 90) * 8 / 20) * 3));
+  runsToHTML(result, 'parent-crudeoil');
 
-  // 4. Chemicals to Acid
-  const weightAcid = 5;
-  let acidProcTrunk1 = Math.floor(capacity1 / weightAcid);
-  let acidProcTrunk2 = Math.floor(capacity2 / weightAcid);
-  $('result-runs-4').value = Math.ceil(requiredWater / (acidProcTrunk1 + acidProcTrunk2));
+  // 8. REFINE: TREATED WATER + CRUDE OIL TO KEROSENE
+  result = runs(capacity1, capacity2, (2 * 100 + 3 * 150), (Math.ceil(Math.ceil(sand / 90) * 8 / 20)));
+  runsToHTML(result, 'parent-kerosene');
 
-  // 3. Waste Water to Sulfur
-  let requiredRawgas = Math.ceil(nSandProc * 10 / 5);
-  const weightWastewater = 50;
-  let wastewaterProcTrunk1 = Math.floor(capacity1 / weightWastewater);
-  let wastewaterProcTrunk2 = Math.floor(capacity2 / weightWastewater);
-  $('result-runs-3').value = Math.ceil(requiredRawgas / (wastewaterProcTrunk1 + wastewaterProcTrunk2));
+  // 9. REFINE: KEROSENE + SULFUR TO EXPLOSIVE
+  result = runs(capacity1, capacity2, (8 * 25 + 10 * 5), (Math.ceil(sand / 90)));
+  runsToHTML(result, 'parent-explosive');
 
-  // 1. Pickup: Raw Gas
-  // 2. Raw Gas to Waste Water
-  const weightRawgas = 150;
-  let rawgasProcTrunk1 = Math.floor(capacity1 / weightRawgas);
-  let rawgasProcTrunk2 = Math.floor(capacity2 / weightRawgas);
-  $('result-runs-1').value = Math.ceil(requiredRawgas / (rawgasProcTrunk1 + rawgasProcTrunk2));
-  $('result-runs-2').value = Math.ceil(requiredRawgas / (rawgasProcTrunk1 + rawgasProcTrunk2));
+  // 10. REFINE: RAW ORE MIX + EXPLOSIVE TO SAND
+  result = runs(capacity1, capacity2, (1 * 250 + 15 * 15), (Math.ceil(sand / 90)));
+  runsToHTML(result, 'parent-sand');
 }
 
 window.onload = () => {
