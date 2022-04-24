@@ -56,83 +56,73 @@
 
               <!-- 1. PICKUP: RAW GAS -->
               <div class="label-no-input"><b>1. Pickup: Raw Gas</b></div>
-              <label for="result-runs-1">Runs:</label>
-              <input type="text" id="result-runs-1" class="output bold" disabled="disabled">
+              <label>Runs:</label>
+              <span id="parent-rawgas"></span>
+              <label>Pickup at:</label>
+              <p><b>GSD Gas</b></p>
 
-              <label for="location-1">Pickup at:</label>
-              <input type="text" id="location-1" class="output" disabled="disabled" value="GSD Gas">
-
-              <!-- 2. RAW GAS TO WASTE WATER -->
+              <!-- 2. REFINE: RAW GAS TO WASTE WATER -->
               <div class="label-no-input"><b>2. Raw Gas → Waste Water</b></div>
-              <label for="result-runs-2">Runs:</label>
-              <input type="text" id="result-runs-2" class="output bold" disabled="disabled">
+              <label>Runs:</label>
+              <span id="parent-wastewater"></span>
+              <label>Refine at:</label>
+              <p><b>Refinery</b></p>
 
-              <label for="location-2">Refine at:</label>
-              <input type="text" id="location-2" class="output" disabled="disabled" value="Refinery">
-
-              <!-- 3. WASTE WATER TO SULFUR -->
+              <!-- 3. REFINE: WASTE WATER TO SULFUR -->
               <div class="label-no-input"><b>3. Waste Water → Sulfur</b></div>
-              <label for="result-runs-3">Runs:</label>
-              <input type="text" id="result-runs-3" class="output bold" disabled="disabled">
+              <label>Runs:</label>
+              <span id="parent-sulfur"></span>
+              <label>Refine at:</label>
+              <p><b>Water Treatment Plant</b></p>
 
-              <label for="location-3">Refine at:</label>
-              <input type="text" id="location-3" class="output" disabled="disabled" value="Water Treatment Plant">
-
-              <!-- 4. CHEMICALS TO ACID -->
+              <!-- 4. REFINE: CHEMICALS TO ACID -->
               <div class="label-no-input"><b>4. Chemicals → Acid</b></div>
-              <label for="result-runs-4">Runs:</label>
-              <input type="text" id="result-runs-4" class="output bold" disabled="disabled">
-
-              <label for="location-4">Refine at:</label>
-              <input type="text" id="location-4" class="output" disabled="disabled" value="Chemical Laboratories">
+              <label>Runs:</label>
+              <span id="parent-acid"></span>
+              <label>Refine at:</label>
+              <p><b>Chemical Laboratories</b></p>
 
               <!-- 5. PICKUP: UNFILTERED WATER -->
               <div class="label-no-input"><b>5. Pickup: Unfiltered Water</b></div>
-              <label for="result-runs-5">Runs:</label>
-              <input type="text" id="result-runs-5" class="output bold" disabled="disabled">
+              <label>Runs:</label>
+              <span id="parent-unfilteredwater"></span>
+              <label>Pickup at:</label>
+              <p><b>Land Act Reservoir</b></p>
 
-              <label for="location-5">Pickup at:</label>
-              <input type="text" id="location-5" class="output" disabled="disabled" value="Land Act Reservoir">
-
-              <!-- 6. UNFILTERED WATER + ACID TO TREATED WATER -->
+              <!-- 6. REFINE: UNFILTERED WATER + ACID TO TREATED WATER -->
               <div class="label-no-input"><b>6. Unfiltered Water + Acid → Treated Water</b></div>
-              <label for="result-runs-6">Runs:</label>
-              <input type="text" id="result-runs-6" class="output bold" disabled="disabled">
-
-              <label for="location-6">Refine at:</label>
-              <input type="text" id="location-6" class="output" disabled="disabled" value="Water Treatment Plant">
+              <label>Runs:</label>
+              <span id="parent-treatedwater"></span>
+              <label>Refine at:</label>
+              <p><b>Water Treatment Plant</b></p>
 
               <!-- 7. PICKUP: CRUDE OIL -->
               <div class="label-no-input"><b>7. Pickup: Crude Oil</b></div>
-              <label for="result-runs-7">Runs:</label>
-              <input type="text" id="result-runs-7" class="output bold" disabled="disabled">
+              <label>Runs:</label>
+              <span id="parent-crudeoil"></span>
+              <label>Pickup at:</label>
+              <p><b>LS Oil</b></p>
 
-              <label for="location-7">Pickup at:</label>
-              <input type="text" id="location-7" class="output" disabled="disabled" value="LS Oil">
-
-              <!-- 8. TREATED WATER + CRUDE OIL TO KEROSENE -->
+              <!-- 8. REFINE: TREATED WATER + CRUDE OIL TO KEROSENE -->
               <div class="label-no-input"><b>8. Treated Water + Crude Oil → Kerosene</b></div>
-              <label for="result-runs-8">Runs:</label>
-              <input type="text" id="result-runs-8" class="output bold" disabled="disabled">
+              <label>Runs:</label>
+              <span id="parent-kerosene"></span>
+              <label>Refine at:</label>
+              <p><b>Refinery</b></p>
 
-              <label for="location-8">Refine at:</label>
-              <input type="text" id="location-8" class="output" disabled="disabled" value="Refinery">
-
-              <!-- 9. KEROSENE + SULFUR TO EXPLOSIVE -->
+              <!-- 9. REFINE: KEROSENE + SULFUR TO EXPLOSIVE -->
               <div class="label-no-input"><b>9. Kerosene + Sulfur → Explosive</b></div>
-              <label for="result-runs-9">Runs:</label>
-              <input type="text" id="result-runs-9" class="output bold" disabled="disabled">
+              <label>Runs:</label>
+              <span id="parent-explosive"></span>
+              <label>Refine at:</label>
+              <p><b>Military Workshop</b></p>
 
-              <label for="location-9">Refine at:</label>
-              <input type="text" id="location-9" class="output" disabled="disabled" value="Military Workshop">
-
-              <!-- 10. RAW ORE MIX + EXPLOSIVE TO SAND -->
+              <!-- 10. REFINE: RAW ORE MIX + EXPLOSIVE TO SAND -->
               <div class="label-no-input"><b>10. Raw Ore Mix + Explosive → Sand</b></div>
-              <label for="result-runs-10">Runs:</label>
-              <input type="text" id="result-runs-10" class="output bold" disabled="disabled">
-
-              <label for="location-10">Refine at:</label>
-              <input type="text" id="location-10" class="output" disabled="disabled" value="Deep Quarry">
+              <label>Runs:</label>
+              <span id="parent-sand"></span>
+              <label>Refine at:</label>
+              <p><b>Deep Quarry</b></p>
             </form>
           </section>
 
