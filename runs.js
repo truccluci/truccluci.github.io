@@ -18,7 +18,7 @@ const calculateCapacity = () => {
     capacity1 = 9000 * multiple;
     capacity2 = 6000 * multiple;
   }
-  return [capacity1, capacity2];
+  return [Math.round(capacity1), Math.round(capacity2)];
 }
 
 // CAPACITY TO HTML
@@ -28,10 +28,12 @@ const capacityToHTML = () => {
 }
 
 // RUNS CALCULATOR
-const runs = (capacity1, capacity2, processWeight, nProcesses) => {
+const runs = (capacity1, capacity2, processWeight, nProcesses, processCost) => {
   const nProcessesTrunk1 = Math.floor(capacity1 / processWeight);
   const nProcessesTrunk2 = Math.floor(capacity2 / processWeight);
-  return Math.ceil(nProcesses / (nProcessesTrunk1 + nProcessesTrunk2));
+  const runs = Math.ceil(nProcesses / (nProcessesTrunk1 + nProcessesTrunk2));
+  const cost = runs * processCost * (nProcessesTrunk1 + nProcessesTrunk2);
+  return [runs, cost];
 }
 
 // RUNS RESULTS TO HTML
@@ -49,63 +51,76 @@ const calculateRuns = () => {
 
   // 1. PICKUP: RAW GAS
   // 2. REFINE: RAW GAS TO WASTE WATER + CHEMICALS
-  let result = runs(capacity1, capacity2, 150, (Math.ceil(Math.ceil(sand / 90) * 10 / 5)));
-  runsToHTML(result, 'parent-rawgas');
-  runsToHTML(result, 'parent-wastewater');
+  let result = runs(capacity1, capacity2, 150, (Math.ceil(Math.ceil(sand / 90) * 10 / 5)), (0 + 10250));
+  runsToHTML(result[0], 'parent-rawgas');
+  runsToHTML(result[0], 'parent-wastewater');
+  let cost = result[1];
 
   // 3. REFINE: WASTE WATER TO SULFUR
-  result = runs(capacity1, capacity2, 50, (Math.ceil(Math.ceil(sand / 90) * 10 / 5)));
-  runsToHTML(result, 'parent-sulfur');
+  result = runs(capacity1, capacity2, 50, (Math.ceil(Math.ceil(sand / 90) * 10 / 5)), 5000);
+  runsToHTML(result[0], 'parent-sulfur');
+  cost += result[1];
 
   // 4. REFINE: CHEMICALS TO ACID
-  result = runs(capacity1, capacity2, 25, ((Math.ceil(Math.ceil(sand / 90) * 8 / 20) * 2 / 4) + (concrete / 4)));
-  runsToHTML(result, 'parent-acid');
+  result = runs(capacity1, capacity2, 25, ((Math.ceil(Math.ceil(sand / 90) * 8 / 20) * 2 / 4) + (concrete / 4)), 2500);
+  runsToHTML(result[0], 'parent-acid');
+  cost += result[1];
 
   // 5. PICKUP: UNFILTERED WATER
-  result = runs(capacity1, capacity2, 100, ((Math.ceil(Math.ceil(sand / 90) * 8 / 20) * 2) + concrete));
-  runsToHTML(result, 'parent-unfilteredwater');
+  result = runs(capacity1, capacity2, 100, ((Math.ceil(Math.ceil(sand / 90) * 8 / 20) * 2) + concrete), 0);
+  runsToHTML(result[0], 'parent-unfilteredwater');
+  cost += result[1];
 
   // 6. REFINE: UNFILTERED WATER + ACID TO TREATED WATER
-  result = runs(capacity1, capacity2, (1 * 100 + 1 * 5), ((Math.ceil(Math.ceil(sand / 90) * 8 / 20) * 2) + concrete));
-  runsToHTML(result, 'parent-treatedwater');
+  result = runs(capacity1, capacity2, (1 * 100 + 1 * 5), ((Math.ceil(Math.ceil(sand / 90) * 8 / 20) * 2) + concrete), 5000);
+  runsToHTML(result[0], 'parent-treatedwater');
+  cost += result[1];
 
   // 7. PICKUP: CRUDE OIL
-  result = runs(capacity1, capacity2, 150, (Math.ceil(Math.ceil(sand / 90) * 8 / 20) * 3));
-  runsToHTML(result, 'parent-crudeoil');
+  result = runs(capacity1, capacity2, 150, (Math.ceil(Math.ceil(sand / 90) * 8 / 20) * 3), 0);
+  runsToHTML(result[0], 'parent-crudeoil');
+  cost += result[1];
 
   // 8. REFINE: TREATED WATER + CRUDE OIL TO KEROSENE
-  result = runs(capacity1, capacity2, (2 * 100 + 3 * 150), (Math.ceil(Math.ceil(sand / 90) * 8 / 20)));
-  runsToHTML(result, 'parent-kerosene');
+  result = runs(capacity1, capacity2, (2 * 100 + 3 * 150), (Math.ceil(Math.ceil(sand / 90) * 8 / 20)), 10250);
+  runsToHTML(result[0], 'parent-kerosene');
+  cost += result[1];
 
   // 9. REFINE: KEROSENE + SULFUR TO EXPLOSIVE
-  result = runs(capacity1, capacity2, (8 * 25 + 10 * 5), (Math.ceil(sand / 90)));
-  runsToHTML(result, 'parent-explosive');
+  result = runs(capacity1, capacity2, (8 * 25 + 10 * 5), (Math.ceil(sand / 90)), 9500);
+  runsToHTML(result[0], 'parent-explosive');
+  cost += result[1];
 
   // 10. PICKUP: QUARRY RUBBLE
-  result = runs(capacity1, capacity2, 150, (Math.ceil(Math.ceil(sand / 90) * 15 / 4)));
-  runsToHTML(result, 'parent-quarryrubble');
-
   // 11. REFINE: QUARRY RUBBLE TO ROM
-  runsToHTML(result, 'parent-raworemix');
+  result = runs(capacity1, capacity2, 150, (Math.ceil(Math.ceil(sand / 90) * 15 / 4)), (0 + 15000));
+  runsToHTML(result[0], 'parent-quarryrubble');
+  runsToHTML(result[0], 'parent-raworemix');
+  cost += result[1];
 
   // 12. REFINE: RAW ORE MIX + EXPLOSIVE TO SAND
-  result = runs(capacity1, capacity2, (1 * 250 + 15 * 15), (Math.ceil(sand / 90)));
-  runsToHTML(result, 'parent-sand');
+  result = runs(capacity1, capacity2, (1 * 250 + 15 * 15), (Math.ceil(sand / 90)), 0);
+  runsToHTML(result[0], 'parent-sand');
+  cost += result[1];
 
   // 13. PICKUP: LOGS
-  result = runs(capacity1, capacity2, 60, concrete);
-  runsToHTML(result, 'parent-logs');
-
   // 14. REFINE: LOGS TO SAWDUST
-  runsToHTML(result, 'parent-sawdust');
+  result = runs(capacity1, capacity2, 60, concrete, (7500 + 500));
+  runsToHTML(result[0], 'parent-logs');
+  runsToHTML(result[0], 'parent-sawdust');
+  cost += result[1];
 
   // 15. REFINE: SAND + SAWDUST TO CEMENT MIX
-  result = runs(capacity1, capacity2, (5 * 5 + 2 * 3), (concrete * 5));
-  runsToHTML(result, 'parent-cementmix');
+  result = runs(capacity1, capacity2, (5 * 5 + 2 * 3), (concrete * 5), 1500);
+  runsToHTML(result[0], 'parent-cementmix');
+  cost += result[1];
 
   // 16. REFINE: CEMENT MIX + TREATED WATER TO CONCRETE
-  result = runs(capacity1, capacity2, (5 * 25 + 1 * 100), concrete);
-  runsToHTML(result, 'parent-concrete');
+  result = runs(capacity1, capacity2, (5 * 25 + 1 * 100), concrete, 15000);
+  runsToHTML(result[0], 'parent-concrete');
+  cost += result[1];
+  cost = Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(cost);
+  document.getElementById('result-cost').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + cost + '*</b></p>');
 }
 
 window.onload = () => {
