@@ -1,3 +1,4 @@
+// 2022-04-25 - luci
 // Add event listener to form to read file once submitted
 document.querySelector('form').addEventListener('submit', e => {
   e.preventDefault();
