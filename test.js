@@ -1,4 +1,43 @@
 // 2022-04-25 - luci
+// Write result to HTML
+const resultsToHTML = (id, result) => {
+  document.getElementById(id).innerHTML = '';
+  if (result.length === 0) {
+    return document.getElementById(id).insertAdjacentHTML('beforeend', '<p class="temp"><b>LOL</b></p>');
+  } else {
+    return document.getElementById(id).insertAdjacentHTML('beforeend', '<p class="temp"><b>' + result + '</b></p>');
+  }
+}
+
+// Combine arrays to object, remove empty values
+const makeObj = (arrayKey, arrayValue1, arrayValue2) => {
+  let obj = Object.fromEntries(arrayKey.map((_, v) => [arrayKey[v], [arrayValue1[v], arrayValue2[v]]]));
+  return Object.fromEntries(Object.entries(obj).filter(([_, v]) => v[1] != ''));
+}
+
+// Write data to HTML table
+const loadTable = (headID, bodyID, obj) => {
+  const TABLE_HEAD = document.getElementById(headID);
+  TABLE_HEAD.innerHTML = '';
+  let row = TABLE_HEAD.insertRow(-1);
+  row.insertCell(0).outerHTML = '<th><b>Item</b></th>';
+  row.insertCell(1).outerHTML = '<th class="align-center"><b>Quantity</b></th>';
+
+  const TABLE_BODY = document.getElementById(bodyID);
+  TABLE_BODY.innerHTML = '';
+  for (let val in obj) {
+    let row = TABLE_BODY.insertRow(-1);
+    let item = row.insertCell(0);
+    let quantity = row.insertCell(1);
+    let textNode;
+    textNode = document.createTextNode(obj[val][0]);
+    item.appendChild(textNode);
+    textNode = document.createTextNode(obj[val][1]);
+    quantity.appendChild(textNode);
+    textNode.parentNode.classList.add('align-center');
+  }
+}
+
 // Add event listener to form to read file once submitted
 document.querySelector('form').addEventListener('submit', e => {
   e.preventDefault();
@@ -8,88 +47,68 @@ document.querySelector('form').addEventListener('submit', e => {
 
   Papa.parse(file, {
     header: true,
-    complete: function(results) {
+    complete: (results) => {
       // Read the data from results
       const { data } = results;
+      // console.log(results.data[0]);
 
       // 1. BASE INFO
-      console.log(results.data[0]);
-      document.getElementById('result-id').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].id + '</b></p>');
-      document.getElementById('result-is_online').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].is_online + '</b></p>');
-      document.getElementById('result-mk13').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].mk13 + '</b></p>');
-      document.getElementById('result-mk14').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].mk14 + '</b></p>');
-      document.getElementById('result-mk15').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].mk15 + '</b></p>');
-      document.getElementById('result-postop').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].postop + '</b></p>');
-      document.getElementById('result-premium').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].premium + '</b></p>');
-      document.getElementById('result-trucker').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].trucker + '</b></p>');
+      resultsToHTML('result-id', results.data[0].id);
+      resultsToHTML('result-is_online', results.data[0].is_online);
+      resultsToHTML('result-mk13', results.data[0].mk13);
+      resultsToHTML('result-mk14', results.data[0].mk14);
+      resultsToHTML('result-mk15', results.data[0].mk15);
+      resultsToHTML('result-postop', results.data[0].postop);
+      resultsToHTML('result-premium', results.data[0].premium);
+      resultsToHTML('result-trucker', results.data[0].trucker);
 
-      // 2. STORAGE: FACTION
-      document.getElementById('result-faq_acid').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].faq_acid + '</b></p>');
-      document.getElementById('result-faq_cmix').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].faq_cmix + '</b></p>');
-      document.getElementById('result-faq_conc').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].faq_conc + '</b></p>');
-      document.getElementById('result-faq_explosive').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].faq_explosive + '</b></p>');
-      document.getElementById('result-faq_kerosene').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].faq_kerosene + '</b></p>');
-      document.getElementById('result-faq_mchem').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].faq_mchem + '</b></p>');
-      document.getElementById('result-faq_oil').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].faq_oil + '</b></p>');
-      document.getElementById('result-faq_rawgas').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].faq_rawgas + '</b></p>');
-      document.getElementById('result-faq_rom').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].faq_rom + '</b></p>');
-      document.getElementById('result-faq_sand').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].faq_sand + '</b></p>');
-      document.getElementById('result-faq_sawdust').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].faq_sawdust + '</b></p>');
-      document.getElementById('result-faq_sulfur').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].faq_sulfur + '</b></p>');
-      document.getElementById('result-faq_twater').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].faq_twater + '</b></p>');
-      document.getElementById('result-faq_uwater').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].faq_uwater + '</b></p>');
-      document.getElementById('result-faq_wastewater').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].faq_wastewater + '</b></p>');
+      let arrayItem = [
+        'acid',
+        'cmix',
+        'conc',
+        'explosive',
+        'kerosene',
+        'mchem',
+        'oil',
+        'rawgas',
+        'rom',
+        'sand',
+        'sawdust',
+        'sulfur',
+        'twater',
+        'uwater',
+        'wastewater'
+      ];
 
-      // 3. STORAGE: GOHQ
-      document.getElementById('result-gohq_acid').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].gohq_acid + '</b></p>');
-      document.getElementById('result-gohq_cmix').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].gohq_cmix + '</b></p>');
-      document.getElementById('result-gohq_conc').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].gohq_conc + '</b></p>');
-      document.getElementById('result-gohq_explosive').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].gohq_explosive + '</b></p>');
-      document.getElementById('result-gohq_kerosene').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].gohq_kerosene + '</b></p>');
-      document.getElementById('result-gohq_mchem').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].gohq_mchem + '</b></p>');
-      document.getElementById('result-gohq_oil').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].gohq_oil + '</b></p>');
-      document.getElementById('result-gohq_rawgas').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].gohq_rawgas + '</b></p>');
-      document.getElementById('result-gohq_rom').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].gohq_rom + '</b></p>');
-      document.getElementById('result-gohq_sand').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].gohq_sand + '</b></p>');
-      document.getElementById('result-gohq_sawdust').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].gohq_sawdust + '</b></p>');
-      document.getElementById('result-gohq_sulfur').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].gohq_sulfur + '</b></p>');
-      document.getElementById('result-gohq_twater').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].gohq_twater + '</b></p>');
-      document.getElementById('result-gohq_uwater').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].gohq_uwater + '</b></p>');
-      document.getElementById('result-gohq_wastewater').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].gohq_wastewater + '</b></p>');
+      let arrayItemName = [
+        'Acid',
+        'Cement Mix',
+        'Concrete',
+        'Explosive',
+        'Kerosene',
+        'Chemicals',
+        'Crude Oil',
+        'Raw Gas',
+        'Raw Ore Mix',
+        'Sand',
+        'Sawdust',
+        'Sulfur',
+        'Treated Water',
+        'Unfiltered Water',
+        'Waste Water'
+      ];
 
-      // 4. STORAGE: TY
-      document.getElementById('result-ty_acid').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].ty_acid + '</b></p>');
-      document.getElementById('result-ty_cmix').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].ty_cmix + '</b></p>');
-      document.getElementById('result-ty_conc').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].ty_conc + '</b></p>');
-      document.getElementById('result-ty_explosive').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].ty_explosive + '</b></p>');
-      document.getElementById('result-ty_kerosene').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].ty_kerosene + '</b></p>');
-      document.getElementById('result-ty_mchem').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].ty_mchem + '</b></p>');
-      document.getElementById('result-ty_oil').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].ty_oil + '</b></p>');
-      document.getElementById('result-ty_rawgas').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].ty_rawgas + '</b></p>');
-      document.getElementById('result-ty_rom').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].ty_rom + '</b></p>');
-      document.getElementById('result-ty_sand').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].ty_sand + '</b></p>');
-      document.getElementById('result-ty_sawdust').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].ty_sawdust + '</b></p>');
-      document.getElementById('result-ty_sulfur').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].ty_sulfur + '</b></p>');
-      document.getElementById('result-ty_twater').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].ty_twater + '</b></p>');
-      document.getElementById('result-ty_uwater').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].ty_uwater + '</b></p>');
-      document.getElementById('result-ty_wastewater').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].ty_wastewater + '</b></p>');
+      let arrayQuantity = arrayItem.map(v => (results.data[0]['faq_' + v]));
+      loadTable('table-faq-head', 'table-faq-body', makeObj(arrayItem, arrayItemName, arrayQuantity));
 
-      // 5. STORAGE: YJ
-      document.getElementById('result-yj_acid').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].yj_acid + '</b></p>');
-      document.getElementById('result-yj_cmix').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].yj_cmix + '</b></p>');
-      document.getElementById('result-yj_conc').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].yj_conc + '</b></p>');
-      document.getElementById('result-yj_explosive').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].yj_explosive + '</b></p>');
-      document.getElementById('result-yj_kerosene').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].yj_kerosene + '</b></p>');
-      document.getElementById('result-yj_mchem').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].yj_mchem + '</b></p>');
-      document.getElementById('result-yj_oil').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].yj_oil + '</b></p>');
-      document.getElementById('result-yj_rawgas').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].yj_rawgas + '</b></p>');
-      document.getElementById('result-yj_rom').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].yj_rom + '</b></p>');
-      document.getElementById('result-yj_sand').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].yj_sand + '</b></p>');
-      document.getElementById('result-yj_sawdust').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].yj_sawdust + '</b></p>');
-      document.getElementById('result-yj_sulfur').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].yj_sulfur + '</b></p>');
-      document.getElementById('result-yj_twater').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].yj_twater + '</b></p>');
-      document.getElementById('result-yj_uwater').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].yj_uwater + '</b></p>');
-      document.getElementById('result-yj_wastewater').insertAdjacentHTML('beforeend', '<p class="temp"><b>' + results.data[0].yj_wastewater + '</b></p>');
+      arrayQuantity = arrayItem.map(v => (results.data[0]['gohq_' + v]));
+      loadTable('table-gohq-head', 'table-gohq-body', makeObj(arrayItem, arrayItemName, arrayQuantity));
+
+      arrayQuantity = arrayItem.map(v => (results.data[0]['ty_' + v]));
+      loadTable('table-ty-head', 'table-ty-body', makeObj(arrayItem, arrayItemName, arrayQuantity));
+
+      arrayQuantity = arrayItem.map(v => (results.data[0]['yj_' + v]));
+      loadTable('table-yj-head', 'table-yj-body', makeObj(arrayItem, arrayItemName, arrayQuantity));
     }
   });
 });
