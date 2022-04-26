@@ -101,6 +101,7 @@ main {
 .main-container {
   display: flex;
   flex-direction: column;
+  gap: 2rem;
   margin: 2rem auto;
   max-width: 60rem;
 }
@@ -165,4 +166,18 @@ section > .section-header:not(:first-child) {
 #form-ratings > input {
   background: var(--color-white-0);
   border: 1px solid var(--color-gray);
+}
+
+table {
+  border-collapse: collapse;
+  padding: 1rem;
+}
+th, td {
+  border: 1px solid #999;
+  font: inherit;
+  padding: 0 0.5rem;
+  text-align: left;
+}
+.align-center {
+  text-align: center;
 }
