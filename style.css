@@ -111,7 +111,7 @@ main {
   gap: 2rem;
 }
 .section-container > section {
-  flex: 1;
+  flex: 1 0 21%;
 }
 .section-container > .width-two-thirds {
   flex: 2;
