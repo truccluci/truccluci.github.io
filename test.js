@@ -62,7 +62,7 @@ document.querySelector('form').addEventListener('submit', e => {
       resultsToHTML('result-premium', results.data[0].premium);
       resultsToHTML('result-trucker', results.data[0].trucker);
 
-      let arrayItem = [
+      const arrayItem = [
         'acid',
         'cmix',
         'conc',
@@ -80,7 +80,7 @@ document.querySelector('form').addEventListener('submit', e => {
         'wastewater'
       ];
 
-      let arrayItemName = [
+      const arrayItemName = [
         'Acid',
         'Cement Mix',
         'Concrete',
@@ -98,17 +98,20 @@ document.querySelector('form').addEventListener('submit', e => {
         'Waste Water'
       ];
 
-      let arrayQuantity = arrayItem.map(v => (results.data[0]['faq_' + v]));
-      loadTable('table-faq-head', 'table-faq-body', makeObj(arrayItem, arrayItemName, arrayQuantity));
+      const arrayQuantityFaq = arrayItem.map(v => Number(results.data[0]['faq_' + v]));
+      loadTable('table-faq-head', 'table-faq-body', makeObj(arrayItem, arrayItemName, arrayQuantityFaq));
 
-      arrayQuantity = arrayItem.map(v => (results.data[0]['gohq_' + v]));
-      loadTable('table-gohq-head', 'table-gohq-body', makeObj(arrayItem, arrayItemName, arrayQuantity));
+      const arrayQuantityGohq = arrayItem.map(v => Number(results.data[0]['gohq_' + v]));
+      loadTable('table-gohq-head', 'table-gohq-body', makeObj(arrayItem, arrayItemName, arrayQuantityGohq));
 
-      arrayQuantity = arrayItem.map(v => (results.data[0]['ty_' + v]));
-      loadTable('table-ty-head', 'table-ty-body', makeObj(arrayItem, arrayItemName, arrayQuantity));
+      const arrayQuantityTy = arrayItem.map(v => Number(results.data[0]['ty_' + v]));
+      loadTable('table-ty-head', 'table-ty-body', makeObj(arrayItem, arrayItemName, arrayQuantityTy));
 
-      arrayQuantity = arrayItem.map(v => (results.data[0]['yj_' + v]));
-      loadTable('table-yj-head', 'table-yj-body', makeObj(arrayItem, arrayItemName, arrayQuantity));
+      const arrayQuantityYj = arrayItem.map(v => Number(results.data[0]['yj_' + v]));
+      loadTable('table-yj-head', 'table-yj-body', makeObj(arrayItem, arrayItemName, arrayQuantityYj));
+
+      const arrayQuantityTotal = arrayQuantityFaq.map((a, i) => a + arrayQuantityGohq[i] + arrayQuantityTy[i] + arrayQuantityYj[i])
+      loadTable('table-total-head', 'table-total-body', makeObj(arrayItem, arrayItemName, arrayQuantityTotal));
     }
   });
 });
